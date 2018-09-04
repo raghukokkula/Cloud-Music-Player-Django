@@ -2,10 +2,6 @@
 
 {% block body %}
     <h1>Here are all my albums</h1>
-
-
-    {% if all_albums %}
-
         <ul>
             {% for album in all_albums %}
             <li>
@@ -13,7 +9,5 @@
             </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <h2>You don't have any albums</h2>
-    {% endif %}
+
 {% endblock %}
