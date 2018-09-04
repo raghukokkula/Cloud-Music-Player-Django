@@ -4,7 +4,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from .models import Album
 # from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 def index(request):
 
@@ -19,10 +19,42 @@ def index1(request):
 
 
 def detail(request, album_id):
-    try:
-        album = Album.objects.get(pk = album_id)
-    except Album.DoesNotExist:
-        raise Http404("This file doesn't exist")
+    #album = Album.objects.get(pk =album_id)
+    album = get_object_or_404(Album, pk=album_id)
 
     return render(request, 'music/details.html', {'album': album})
+
+
+def favorite(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    try:
+        selected_song = album.song_set.get(pk=request.POST['song'])
+    except(KeyError, Song.DoesNotExist):
+        return render(request, 'music/details.html', {'album': album, 'error_message': "You did not select any valid song"})
+    else:
+        selected_song.is_favorite = True
+        selected_song.save()
+        return render(request, 'music/details.html', {'album': album})
+
+def unfavorite(request, album_id):
+    album = get_object_or_404(Album, pk=album_id)
+    try:
+        selected_song = album.song_set.get(pk=request.POST['song'])
+    except(KeyError, Song.DoesNotExist):
+        return render(request, 'music/details.html', {'album': album, 'error_message': "You did not select any valid song"})
+    else:
+        selected_song.is_favorite = False
+        selected_song.save()
+        return render(request, 'music/details.html', {'album': album})
+
+
+
+
+
+
+
+
+
+
+
 
