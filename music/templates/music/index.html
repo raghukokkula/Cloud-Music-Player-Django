@@ -1,60 +1,19 @@
-{#loads the path to static files#}
-{% load staticfiles %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>﻿
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{% extends 'music/base.html' %}
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <!-- Header -->
-        <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'music:index' %}">Youtube</a>
-        </div>
-
-        <!--Items-->
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="{% url 'music:index' %}">
-                        <span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp;
-                        Albums
-                    </a>
-
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp;
-                        Songs
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
+{% block body %}
+    <h1>Here are all my albums</h1>
 
 
+    {% if all_albums %}
 
-<h1>Here are all my albums</h1>
-
-
-{% if all_albums %}
-
-    <ul>
-        {% for album in all_albums %}
-        <li>
-            <a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h2>You don't have any albums</h2>
-{% endif %}
+        <ul>
+            {% for album in all_albums %}
+            <li>
+                <a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>You don't have any albums</h2>
+    {% endif %}
+{% endblock %}
