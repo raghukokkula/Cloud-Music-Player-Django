@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Music Albums</title>
-</head>
-<body>
+{#loads the path to static files#}
+{% load staticfiles %}
+<link  rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}"/>
 
-    <h1>Here are all my albums</h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+    {#        Logo#}
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'music:index' %}">Youtube</a>
+        </div>
+
+    </div>
+</nav>
 
 
-    {% if all_albums %}
+
+<h1>Here are all my albums</h1>
+
+
+{% if all_albums %}
 
     <ul>
         {% for album in all_albums %}
@@ -18,8 +28,6 @@
         </li>
         {% endfor %}
     </ul>
-    {% else %}
-        <h2>You don't have any albums</h2>
-    {% endif %}
-</body>
-</html>
+{% else %}
+    <h2>You don't have any albums</h2>
+{% endif %}
